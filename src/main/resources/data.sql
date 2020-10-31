@@ -1,0 +1,12 @@
+INSERT INTO country (code,name,version) VALUES (643,'Российская Федерация',0),(840,'США',0),(250,'Франция',0),(859,'Чехия',0); 
+INSERT INTO doc (code,name,version) VALUES (10,'Паспорт иностранного гражданина',0),(12,'Вид на жительство в Российской Федерации',0),(15,'Разрешение на временное проживание в РФ',0),(21,'Паспорт гражданина Российской Федерации',0); 
+INSERT INTO organization (id, version, name, full_name, inn, kpp, address, phone, is_active) VALUES (1, 0, 'Драгоценность и Ъ', 'ПАО "Драгоценность и Ъ"', '3169961387', '359245555', 'г. Поддубы, ул. Белогорская 2-я, дом 171', '+7 (953) 673-66-56', '1');
+INSERT INTO organization (id, version, name, full_name, inn, kpp, address, phone, is_active) VALUES (2, 0, 'Орбита ', 'ПАО "Орбита и Ъ"', '1191485644', '589845813', 'г. Татищево, ул. Вересковая, дом 140', '+7 (970) 497-62-97', '1');
+INSERT INTO office (id, version, org_id, name, address, phone, is_active) VALUES (1, 0, 1, 'Филиал №1', 'г. Сковородино, ул. Михайловский пер, дом 124','+7 (928) 595-87-56',1);
+INSERT INTO office (id, version, org_id, name, address, phone, is_active) VALUES (2, 0, 1, 'Филиал №2', 'г. Канск, ул. Чистова, дом 67, квартира 945','+7 (968) 230-35-58',1);
+INSERT INTO office (id, version, org_id, name, address, phone, is_active) VALUES (3, 0, 2, 'Филиал №1', 'г. Енотаевка, ул. Портовая 2-я, дом 38','+7 (921) 711-32-02',1);
+INSERT INTO user (id, version, office_id, first_name, second_name, middle_name, position, phone, doc_code, doc_name, doc_number, doc_date, citizenship_code, citizenship_name, is_identified) VALUES (1, 0, 1, 'Флоризел', 'Сморчкова', 'Андреевна', 'менеджер', '+7 (968) 230-35-58', 12, 'Вид на жительство в Российской Федерации', '4578123457', '2008-10-23', 840, 'США', 1);
+INSERT INTO user (id, version, office_id, first_name, second_name, middle_name, position, phone, doc_code, doc_name, doc_number, doc_date, citizenship_code, citizenship_name, is_identified) VALUES (2, 0, 1, 'Флоризел', 'Сморчкова', 'Андреевна', 'менеджер', '+7 (968) 230-35-58', 21, 'Паспорт гражданина Российской Федерации', '4578123457', '2008-10-23', 840, 'США', 1);
+INSERT INTO user (id, version, office_id, first_name, second_name, middle_name, position, phone, doc_code, doc_name, doc_number, doc_date, citizenship_code, citizenship_name, is_identified) VALUES (3, 0, 2, 'Ваче', 'Галкин', 'Владимирович', 'электрик', '+7 (930) 424-06-80', 21, 'Паспорт гражданина Российской Федерации', '3245789412', '2009-11-15', 643, 'Российская Федерация', 1);
+
+
