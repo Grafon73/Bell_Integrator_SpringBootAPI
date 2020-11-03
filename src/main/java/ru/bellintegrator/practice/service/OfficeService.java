@@ -39,4 +39,12 @@ public interface OfficeService {
      * @param office
      */
     void edit(Office office);
+
+    /**
+     * Получить Office по фильтру
+     *
+     * @param office
+     * @return
+     */
+    List<Office> getByName(Office office);
 }

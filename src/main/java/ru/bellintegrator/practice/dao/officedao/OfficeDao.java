@@ -26,12 +26,12 @@ public interface OfficeDao {
     Office loadById(int id);
 
     /**
-     * Получить Office по имени
+     * Получить Office по фильтру
      *
-     * @param name
+     * @param office
      * @return
      */
-    Office loadByName(String name);
+    List<Office> loadByName(Office office);
 
     /**
      * Сохранить Office

@@ -57,4 +57,12 @@ public class OfficeServiceImpl implements OfficeService {
     public void edit(Office office) {
         dao.edit(office);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Office> getByName(Office office) {
+        return dao.loadByName(office);
+    }
 }

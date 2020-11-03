@@ -8,7 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,12 +47,13 @@ public class OfficeDaoImpl implements OfficeDao{
 
     /**
      * {@inheritDoc}
+     * @return
      */
     @Override
-    public Office loadByName(String name) {
-        CriteriaQuery<Office> criteria = buildCriteria(name);
+    public List<Office> loadByName(Office office) {
+        CriteriaQuery<Office> criteria = buildCriteria(office);
         TypedQuery<Office> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     /**
@@ -78,12 +81,28 @@ public class OfficeDaoImpl implements OfficeDao{
         em.merge(updatedOff);
     }
 
-    private CriteriaQuery<Office> buildCriteria(String name) {
+    private CriteriaQuery<Office> buildCriteria(Office office) {
+        String name = office.getName();
+        String phone = office.getPhone();
+        Boolean isActive = office.getisActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
 
-        Root<Office> person = criteria.from(Office.class);
-        criteria.where(builder.equal(person.get("name"), name));
+        Root<Office> obj = criteria.from(Office.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(obj.get("orgId"), office.getOrgId()));
+        if(name !=null){
+            predicates.add(builder.equal(obj.get("name"), name));
+        }
+        if(phone !=null){
+            predicates.add(builder.equal(obj.get("phone"), phone));
+        }
+        if(isActive != null){
+            predicates.add(builder.equal(obj.get("isActive"), isActive));
+        }
+        criteria.select(obj)
+                .where(predicates.toArray(new Predicate[]{}));
 
         return criteria;
     }

@@ -57,4 +57,12 @@ public class OrgServiceImpl implements OrgService {
     public void edit(Organization organization) {
       dao.edit(organization);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Organization getByName(Organization organization) {
+        return dao.loadByName(organization);
+    }
 }

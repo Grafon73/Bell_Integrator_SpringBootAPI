@@ -24,12 +24,12 @@ public interface UserDao {
     User loadById(int id);
 
     /**
-     * Получить User по имени
+     * Получить User по фильтру
      *
      * @param name
      * @return
      */
-    User loadByName(String name);
+    List<User> loadByName(User user);
 
     /**
      * Сохранить User

@@ -39,4 +39,14 @@ public interface OrgService {
      * @param organization
      */
     void edit(Organization organization);
+
+
+    /**
+     * Получить Organization по имени
+     *
+     * @param organization
+     * @return
+     */
+    Organization getByName(Organization organization);
+
 }

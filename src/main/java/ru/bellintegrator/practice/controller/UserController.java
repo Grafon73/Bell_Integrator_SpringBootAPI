@@ -61,4 +61,11 @@ public class UserController {
         userService.edit(user);
         return user;
     }
+
+    @ApiOperation(value = "Получить юзера по фильтру", httpMethod = "POST")
+    @PostMapping("/user/list")
+    public List<User> getOrg(@RequestBody User user){
+
+        return userService.getByName(user);
+    }
 }

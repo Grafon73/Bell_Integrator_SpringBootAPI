@@ -8,7 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,8 +48,8 @@ public class OrgDaoImpl implements OrgDao {
      * {@inheritDoc}
      */
     @Override
-    public Organization loadByName(String name) {
-        CriteriaQuery<Organization> criteria = buildCriteria(name);
+    public Organization loadByName(Organization organization) {
+        CriteriaQuery<Organization> criteria = buildCriteria(organization);
         TypedQuery<Organization> query = em.createQuery(criteria);
         return query.getSingleResult();
     }
@@ -78,12 +80,24 @@ public class OrgDaoImpl implements OrgDao {
         em.merge(updatedOrg);
     }
 
-    private CriteriaQuery<Organization> buildCriteria(String name) {
+    private CriteriaQuery<Organization> buildCriteria(Organization organization) {
+        String phone= organization.getPhone();
+        Boolean isActive = organization.getisActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteria = builder.createQuery(Organization.class);
 
-        Root<Organization> person = criteria.from(Organization.class);
-        criteria.where(builder.equal(person.get("name"), name));
+        Root<Organization> obj = criteria.from(Organization.class);
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        predicates.add(builder.equal(obj.get("name"), organization.getName()));
+        if(phone !=null){
+            predicates.add(builder.equal(obj.get("phone"), phone));
+        }
+        if(isActive != null){
+            predicates.add(builder.equal(obj.get("IsActive"), isActive));
+        }
+        criteria.select(obj)
+                .where(predicates.toArray(new Predicate[]{}));
 
         return criteria;
     }

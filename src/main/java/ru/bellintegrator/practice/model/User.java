@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.util.Date;
 
@@ -89,6 +91,7 @@ public class User {
      * Дата выдачи документа
      */
     @Column(name = "doc_date")
+    @Temporal(TemporalType.DATE)
     private Date docDate;
 
     /**

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.model.Country;
 import ru.bellintegrator.practice.model.Doc;
-import ru.bellintegrator.practice.model.Office;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

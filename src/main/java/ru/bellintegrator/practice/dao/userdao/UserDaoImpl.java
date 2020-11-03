@@ -2,13 +2,16 @@ package ru.bellintegrator.practice.dao.userdao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.bellintegrator.practice.model.Country;
 import ru.bellintegrator.practice.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,12 +46,14 @@ public class UserDaoImpl implements UserDao{
 
     /**
      * {@inheritDoc}
+     * @param name
+     * @return
      */
     @Override
-    public User loadByName(String name) {
-        CriteriaQuery<User> criteria = buildCriteria(name);
+    public List<User> loadByName(User user) {
+        CriteriaQuery<User> criteria = buildCriteria(user);
         TypedQuery<User> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     /**
@@ -56,7 +61,9 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public void save(User user) {
+        user.setCitizenshipName(em.createQuery("SELECT c FROM Country c where c.code = "+user.getCitizenshipCode(), Country.class).getSingleResult().getName());
         em.persist(user);
+
     }
 
     /**
@@ -81,7 +88,6 @@ public class UserDaoImpl implements UserDao{
             updatedUser.setDocCode(user.getDocCode());
             updatedUser.setDocName(user.getDocName());
         }
-
         if(!user.getDocNumber().isEmpty()){
             updatedUser.setDocNumber(user.getDocNumber());
         }
@@ -90,19 +96,49 @@ public class UserDaoImpl implements UserDao{
         }
         if(user.getCitizenshipCode()!=null){
             updatedUser.setCitizenshipCode(user.getCitizenshipCode());
+            updatedUser.setCitizenshipName(em.createQuery("SELECT c FROM Country c where c.code = "+user.getCitizenshipCode(), Country.class).getSingleResult().getName());
+
         }
-
          em.merge(updatedUser);
-
-
     }
 
-    private CriteriaQuery<User> buildCriteria(String name) {
+    private CriteriaQuery<User> buildCriteria(User user) {
+        String firstName = user.getFirstName();
+        String lastName = user.getSecondName();
+        String middleName = user.getMiddleName();
+        String position = user.getPosition();
+        Integer docCode = user.getDocCode();
+        Integer citizenshipCode = user.getCitizenshipCode();
+
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
 
-        Root<User> user = criteria.from(User.class);
-        criteria.where(builder.equal(user.get("name"), name));
+        Root<User> obj = criteria.from(User.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(obj.get("officeId"), user.getOfficeId()));
+        if(firstName !=null){
+            predicates.add(builder.equal(obj.get("firstName"), firstName));
+        }
+        if(lastName !=null &&obj.get("secondName")!=null ){
+            predicates.add(builder.equal(obj.get("secondName"), lastName));
+        }else if(lastName !=null && obj.get("lastName")!=null){
+            predicates.add(builder.equal(obj.get("lastName"), lastName));
+        }
+        if(middleName !=null){
+            predicates.add(builder.equal(obj.get("middleName"), middleName));
+        }
+        if(position !=null){
+            predicates.add(builder.equal(obj.get("position"), position));
+        }
+        if(docCode !=null){
+            predicates.add(builder.equal(obj.get("docCode"), docCode));
+        }
+        if(citizenshipCode !=null){
+            predicates.add(builder.equal(obj.get("citizenshipCode"), citizenshipCode));
+        }
+        criteria.select(obj)
+                .where(predicates.toArray(new Predicate[]{}));
 
         return criteria;
     }

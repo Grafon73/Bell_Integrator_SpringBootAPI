@@ -30,7 +30,7 @@ public interface OrgDao {
      * @param name
      * @return
      */
-    Organization loadByName(String name);
+    Organization loadByName(Organization organization);
 
     /**
      * Сохранить Organization

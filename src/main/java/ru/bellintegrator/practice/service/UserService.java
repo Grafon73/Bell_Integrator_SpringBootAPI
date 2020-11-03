@@ -40,4 +40,11 @@ public interface UserService {
      */
     void edit(User user);
 
+    /**
+     * Получить User по фильтру
+     *
+     * @param user
+     * @return
+     */
+    List<User> getByName(User user);
 }

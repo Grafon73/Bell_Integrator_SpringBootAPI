@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,6 +58,13 @@ public class OfficeController {
     public Office updateUser(@RequestBody Office office){
         officeService.edit(office);
         return office;
+    }
+
+    @ApiOperation(value = "Получить офис по фильтру", httpMethod = "POST")
+    @PostMapping("/office/list")
+    public List<Office> getOrg(@RequestBody Office office){
+
+        return officeService.getByName(office);
     }
 
 }

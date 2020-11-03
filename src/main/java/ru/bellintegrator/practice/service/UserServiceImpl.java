@@ -16,8 +16,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao dao;
 
+
     @Autowired
     public UserServiceImpl(UserDao dao) {
+
         this.dao = dao;
 
     }
@@ -58,7 +60,15 @@ public class UserServiceImpl implements UserService {
         dao.edit(user);
     }
 
-
+    /**
+     * {@inheritDoc}
+     * @param user
+     * @return
+     */
+    @Override
+    public List<User> getByName(User user) {
+        return dao.loadByName(user);
+    }
 
 
 }
