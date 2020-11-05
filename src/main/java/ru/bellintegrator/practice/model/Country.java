@@ -32,13 +32,9 @@ public class Country implements Serializable {
     /**
      * Название страны
      */
-    @Column(name = "name")
+    @Column(name = "name", length = 50)
     private String name;
 
-
-    @OneToMany(mappedBy="country")
-    @JsonIgnore
-    private Set<User> users;
 
     /**
      * Конструктор для hibernate
@@ -62,14 +58,4 @@ public class Country implements Serializable {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        if (users == null) {
-            users = new HashSet<>();
-        }
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 }

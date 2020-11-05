@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +42,7 @@ public class Organization {
     /**
      * Полное наименование
      */
-    @Column(name = "full_name", length = 50, nullable = false)
+    @Column(name = "full_name", length = 255, nullable = false)
     private String fullName;
 
     /**
@@ -59,7 +60,7 @@ public class Organization {
     /**
      * Адрес
      */
-    @Column(name = "address", length = 50, nullable = false)
+    @Column(name = "address", length = 255, nullable = false)
     private String address;
 
 
@@ -72,7 +73,7 @@ public class Organization {
     /**
      * Статус организации
      */
-    @Column(name = "is_active",columnDefinition = "TINYINT(1)")
+    @Column(name = "is_active")
     private Boolean isActive;
 
 
@@ -144,11 +145,11 @@ public class Organization {
         this.phone = phone;
     }
 
-    public Boolean getisActive() {
+    public Boolean getActive() {
         return isActive;
     }
 
-    public void setisActive(Boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
     }
 

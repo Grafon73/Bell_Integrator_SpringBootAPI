@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.model.Organization;
 import ru.bellintegrator.practice.service.OrgService;
+import ru.bellintegrator.practice.view.OrgView;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class OrgController {
 
     @ApiOperation(value = "Получить список всех организаций", httpMethod = "GET")
     @GetMapping("/organization")
-    public List<Organization> getAllOrgs(){
+    public List<OrgView> getAllOrgs(){
         return orgService.allOrg();
     }
 

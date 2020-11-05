@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -72,41 +75,20 @@ public class User {
     /**
      * Код документа
      */
-    @Column(name = "doc_code")
+    @Column(name = "doc_id")
     private Integer docCode;
 
-    /**
-     * Имя документа
-     */
-    @Column(name = "doc_name", length = 50)
-    private String docName;
-
-    /**
-     * Номер документа
-     */
-    @Column(name = "doc_number", length = 50)
-    private String docNumber;
-
-    /**
-     * Дата выдачи документа
-     */
-    @Column(name = "doc_date")
-    @Temporal(TemporalType.DATE)
-    private Date docDate;
 
     /**
      * Код страны
      */
-    @Column(name = "citizenship_code")
+    @Column(name = "citizenship")
     private Integer citizenshipCode;
-
-    @Column(name = "citizenship_name")
-    private String citizenshipName;
 
     /**
      * Статус идентификации
      */
-    @Column(name = "is_identified",columnDefinition = "TINYINT(1)")
+    @Column(name = "is_identified")
     private Boolean isIdentified;
 
     @ManyToOne()
@@ -115,17 +97,16 @@ public class User {
     @JsonIgnore
     private Office office;
 
-    @ManyToOne()
-    @JoinColumn(name = "doc_code",
-            insertable=false, updatable=false)
-    @JsonIgnore
-    private Doc doc;
+    @OneToOne()
+    @JoinColumn(name = "id")
+    private UserDoc userDoc;
 
-    @ManyToOne()
-    @JoinColumn(name = "citizenship_code",
+    @OneToOne()
+    @JoinColumn(name = "citizenship",
             insertable=false, updatable=false)
     @JsonIgnore
     private Country country;
+
 
     /**
      * Конструктор для hibernate
@@ -198,30 +179,6 @@ public class User {
         this.docCode = docCode;
     }
 
-    public String getDocName() {
-        return docName;
-    }
-
-    public void setDocName(String docName) {
-        this.docName = docName;
-    }
-
-    public String getDocNumber() {
-        return docNumber;
-    }
-
-    public void setDocNumber(String docNumber) {
-        this.docNumber = docNumber;
-    }
-
-    public Date getDocDate() {
-        return docDate;
-    }
-
-    public void setDocDate(Date docDate) {
-        this.docDate = docDate;
-    }
-
     public Integer getCitizenshipCode() {
         return citizenshipCode;
     }
@@ -230,13 +187,9 @@ public class User {
         this.citizenshipCode = citizenshipCode;
     }
 
-    public Boolean getisIdentified() {
-        return isIdentified;
-    }
+    public Boolean getIdentified() {return isIdentified;}
 
-    public void setisIdentified(Boolean identified) {
-        isIdentified = identified;
-    }
+    public void setIdentified(Boolean identified) { isIdentified = identified; }
 
     public Office getOffice() {
         return office;
@@ -246,20 +199,12 @@ public class User {
         this.office = office;
     }
 
-    public String getCitizenshipName() {
-        return citizenshipName;
+    public UserDoc getUserDoc() {
+        return userDoc;
     }
 
-    public void setCitizenshipName(String citizenshipName) {
-        this.citizenshipName = citizenshipName;
-    }
-
-    public Doc getDoc() {
-        return doc;
-    }
-
-    public void setDoc(Doc doc) {
-        this.doc = doc;
+    public void setUserDoc(UserDoc userDoc) {
+        this.userDoc = userDoc;
     }
 
     public Country getCountry() {

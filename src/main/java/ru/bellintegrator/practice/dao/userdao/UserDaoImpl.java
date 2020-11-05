@@ -61,7 +61,7 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public void save(User user) {
-        user.setCitizenshipName(em.createQuery("SELECT c FROM Country c where c.code = "+user.getCitizenshipCode(), Country.class).getSingleResult().getName());
+//        user.setCitizenshipName(em.createQuery("SELECT c FROM Country c where c.code = "+user.getCitizenshipCode(), Country.class).getSingleResult().getName());
         em.persist(user);
 
     }
@@ -84,20 +84,8 @@ public class UserDaoImpl implements UserDao{
             updatedUser.setMiddleName(user.getMiddleName());
         }
         updatedUser.setPosition(user.getPosition());
-        if(user.getDocCode()!=null){
+        if(user.getDocCode()!=null) {
             updatedUser.setDocCode(user.getDocCode());
-            updatedUser.setDocName(user.getDocName());
-        }
-        if(!user.getDocNumber().isEmpty()){
-            updatedUser.setDocNumber(user.getDocNumber());
-        }
-        if(user.getDocDate()!=null){
-            updatedUser.setDocDate(user.getDocDate());
-        }
-        if(user.getCitizenshipCode()!=null){
-            updatedUser.setCitizenshipCode(user.getCitizenshipCode());
-            updatedUser.setCitizenshipName(em.createQuery("SELECT c FROM Country c where c.code = "+user.getCitizenshipCode(), Country.class).getSingleResult().getName());
-
         }
          em.merge(updatedUser);
     }

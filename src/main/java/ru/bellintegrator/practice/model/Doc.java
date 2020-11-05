@@ -33,13 +33,8 @@ public class Doc implements Serializable {
     /**
      * Название документа
      */
-    @Column(name = "name")
+    @Column(name = "name", length = 255)
     private String name;
-
-
-    @OneToMany(mappedBy="doc")
-    @JsonIgnore
-    private Set<User> users;
 
     /**
      * Конструктор для hibernate
@@ -64,16 +59,6 @@ public class Doc implements Serializable {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        if (users == null) {
-            users = new HashSet<>();
-        }
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 }
 
 

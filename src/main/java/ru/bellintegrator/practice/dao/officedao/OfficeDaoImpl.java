@@ -84,7 +84,7 @@ public class OfficeDaoImpl implements OfficeDao{
     private CriteriaQuery<Office> buildCriteria(Office office) {
         String name = office.getName();
         String phone = office.getPhone();
-        Boolean isActive = office.getisActive();
+        Boolean isActive = office.getActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
 

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bellintegrator.practice.model.Country;
-import ru.bellintegrator.practice.model.Doc;
 import ru.bellintegrator.practice.service.InfoService;
+import ru.bellintegrator.practice.view.CountryView;
+import ru.bellintegrator.practice.view.DocView;
 
 import java.util.List;
 
@@ -29,13 +29,13 @@ public class InformationController {
 
     @ApiOperation(value = "Получить список всех документов", httpMethod = "GET")
     @GetMapping("/docs")
-    public List<Doc> getAllDocs(){
+    public List<DocView> getAllDocs(){
         return infoService.allDocs();
     }
 
     @ApiOperation(value = "Получить список всех стран", httpMethod = "GET")
     @GetMapping("/InformationController")
-    public List<Country> getAllCountries(){
+    public List<CountryView> getAllCountries(){
         return infoService.allCountries();
     }
 

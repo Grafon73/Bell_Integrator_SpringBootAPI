@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.service;
 
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.model.Organization;
+import ru.bellintegrator.practice.view.OrgView;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface OrgService {
      *
      * @return
      */
-    List<Organization> allOrg();
+    List<OrgView> allOrg();
 
     /**
      * Сохранить Organization

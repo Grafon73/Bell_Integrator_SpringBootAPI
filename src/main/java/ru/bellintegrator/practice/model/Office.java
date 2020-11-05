@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
@@ -48,7 +49,7 @@ public class Office {
     /**
      * Адрес
      */
-    @Column(name = "address", length = 50, nullable = false)
+    @Column(name = "address", length = 255, nullable = false)
     private String address;
 
 
@@ -61,7 +62,7 @@ public class Office {
     /**
      * Статус офиса
      */
-    @Column(name = "is_active",columnDefinition = "TINYINT(1)")
+    @Column(name = "is_active")
     private Boolean isActive;
 
     @OneToMany(mappedBy="office")
@@ -121,11 +122,11 @@ public class Office {
         this.phone = phone;
     }
 
-    public Boolean getisActive() {
+    public Boolean getActive() {
         return isActive;
     }
 
-    public void setisActive(Boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
     }
 

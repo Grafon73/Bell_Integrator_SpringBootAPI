@@ -28,7 +28,8 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public List<Office> allOrg() {
-      return dao.all();
+
+        return dao.all();
     }
 
     /**

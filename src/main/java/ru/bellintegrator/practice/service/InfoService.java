@@ -2,9 +2,8 @@ package ru.bellintegrator.practice.service;
 
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.model.Country;
-import ru.bellintegrator.practice.model.Doc;
-import ru.bellintegrator.practice.model.Office;
+import ru.bellintegrator.practice.view.CountryView;
+import ru.bellintegrator.practice.view.DocView;
 
 import java.util.List;
 
@@ -19,12 +18,12 @@ public interface InfoService {
      *
      * @return
      */
-    List<Doc> allDocs();
+    List<DocView> allDocs();
 
     /**
      * Получить все объекты Country
      *
      * @return
      */
-    List<Country> allCountries();
+    List<CountryView> allCountries();
 }

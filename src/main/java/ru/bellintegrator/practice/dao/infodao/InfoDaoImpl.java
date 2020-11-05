@@ -7,6 +7,7 @@ import ru.bellintegrator.practice.model.Doc;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 /**
@@ -27,8 +28,9 @@ public class InfoDaoImpl implements InfoDao{
      */
     @Override
     public List<Doc> allDocs() {
-        TypedQuery<Doc> query = em.createQuery("SELECT o FROM Doc o", Doc.class);
-        return query.getResultList();
+        CriteriaQuery<Doc> criteria = em.getCriteriaBuilder().createQuery(Doc.class);
+        criteria.from(Doc.class);
+        return em.createQuery(criteria).getResultList();
     }
 
     /**
@@ -36,7 +38,8 @@ public class InfoDaoImpl implements InfoDao{
      */
     @Override
     public List<Country> allCountries() {
-        TypedQuery<Country> query = em.createQuery("SELECT o FROM Country o", Country.class);
-        return query.getResultList();
+        CriteriaQuery<Country> criteria = em.getCriteriaBuilder().createQuery(Country.class);
+        criteria.from(Country.class);
+        return em.createQuery(criteria).getResultList();
     }
 }
