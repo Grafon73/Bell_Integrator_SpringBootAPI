@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.util.Date;
 
 /**
  * Документ юзера
@@ -32,14 +31,14 @@ public class UserDoc {
     /**
      * Номер документа
      */
-    @Column(name = "doc_number", length = 50, nullable = false)
+    @Column(name = "doc_number", length = 20, nullable = false)
     private String docNumber;
 
     /**
      * Дата документа
      */
-    @Column(name = "doc_date", length = 50, nullable = false)
-    private Date docDate;
+    @Column(name = "doc_date", length = 20, nullable = false)
+    private String docDate;
 
     /**
      * Код документа
@@ -75,11 +74,11 @@ public class UserDoc {
         this.docNumber = docNumber;
     }
 
-    public Date getDocDate() {
+    public String getDocDate() {
         return docDate;
     }
 
-    public void setDocDate(Date docDate) {
+    public void setDocDate(String docDate) {
         this.docDate = docDate;
     }
 

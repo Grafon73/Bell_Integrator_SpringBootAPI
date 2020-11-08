@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.service;
 
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.model.Organization;
+import ru.bellintegrator.practice.view.OrgFilterView;
 import ru.bellintegrator.practice.view.OrgView;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public interface OrgService {
      * @param id
      * @return
      */
-    Organization  getByID(int id);
+    OrgView getByID(int id);
 
     /**
      * Изменить Organization
@@ -48,6 +49,6 @@ public interface OrgService {
      * @param organization
      * @return
      */
-    Organization getByName(Organization organization);
+    List<OrgFilterView> getByName(Organization organization);
 
 }

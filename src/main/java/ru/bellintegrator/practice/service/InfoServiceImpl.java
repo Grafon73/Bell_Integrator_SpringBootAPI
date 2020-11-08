@@ -1,13 +1,11 @@
 package ru.bellintegrator.practice.service;
 
 import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.bellintegrator.practice.dao.infodao.InfoDao;
 import ru.bellintegrator.practice.model.Country;
 import ru.bellintegrator.practice.model.Doc;
-
 import ru.bellintegrator.practice.view.CountryView;
 import ru.bellintegrator.practice.view.DocView;
 

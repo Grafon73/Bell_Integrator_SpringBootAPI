@@ -1,10 +1,10 @@
 package ru.bellintegrator.practice.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,13 +43,13 @@ public class Office {
     /**
      * Наименование
      */
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", length = 50)
     private String name;
 
     /**
      * Адрес
      */
-    @Column(name = "address", length = 255, nullable = false)
+    @Column(name = "address", length = 255)
     private String address;
 
 
@@ -69,7 +69,7 @@ public class Office {
     @JsonIgnore
     private Set<User> users;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id",
             insertable=false, updatable=false)
     @JsonIgnore
@@ -122,11 +122,11 @@ public class Office {
         this.phone = phone;
     }
 
-    public Boolean getActive() {
+    public Boolean getisActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setisActive(Boolean active) {
         isActive = active;
     }
 

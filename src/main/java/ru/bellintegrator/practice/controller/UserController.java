@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.model.User;
 import ru.bellintegrator.practice.service.UserService;
-
-import java.util.List;
+import ru.bellintegrator.practice.view.MainDto;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -33,15 +32,15 @@ public class UserController {
 
     @ApiOperation(value = "Получить список всех людей", httpMethod = "GET")
     @GetMapping("/user")
-    public List<User> getAllUsers(){
-        return userService.allOrg();
+    public MainDto getAllUsers(){
+        return new MainDto(userService.allOrg());
     }
 
     @ApiOperation(value = "Получить человека по ID", httpMethod = "GET")
     @GetMapping("/user/{id}")
-    public User getUser(@PathVariable String id){
+    public MainDto getUser(@PathVariable String id){
 
-        return userService.getByID(Integer.parseInt(id));
+        return new MainDto(userService.getByID(Integer.parseInt(id)));
     }
 
     @ApiOperation(value = "Добавить нового человека", httpMethod = "POST")
@@ -50,22 +49,22 @@ public class UserController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @PostMapping("/user/save")
-    public User addUser(@RequestBody User user){
+    public String addUser(@RequestBody User user){
         userService.add(user);
-        return user;
+        return "{\"result\" : \"success\"}";
     }
 
     @ApiOperation(value = "Обновить информацию о человеке", httpMethod = "POST")
     @PostMapping("/user/update")
-    public User updateUser(@RequestBody User user){
+    public String updateUser(@RequestBody User user){
         userService.edit(user);
-        return user;
+        return "{\"result\" : \"success\"}";
     }
 
     @ApiOperation(value = "Получить юзера по фильтру", httpMethod = "POST")
     @PostMapping("/user/list")
-    public List<User> getOrg(@RequestBody User user){
+    public MainDto getOrg(@RequestBody User user){
 
-        return userService.getByName(user);
+        return new MainDto(userService.getByName(user));
     }
 }

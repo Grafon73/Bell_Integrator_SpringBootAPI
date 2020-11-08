@@ -5,19 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import java.util.Date;
 
 /**
  * Юзер
@@ -37,7 +33,7 @@ public class User {
     private Integer version;
 
     /**
-     * Идентификатор юзера
+     * Идентификатор офиса юзера
      */
     @Column(name = "office_id", nullable = false)
     private Integer officeId;
@@ -91,17 +87,17 @@ public class User {
     @Column(name = "is_identified")
     private Boolean isIdentified;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id",
             insertable=false, updatable=false)
     @JsonIgnore
     private Office office;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private UserDoc userDoc;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "citizenship",
             insertable=false, updatable=false)
     @JsonIgnore
@@ -187,9 +183,9 @@ public class User {
         this.citizenshipCode = citizenshipCode;
     }
 
-    public Boolean getIdentified() {return isIdentified;}
+    public Boolean getisIdentified() {return isIdentified;}
 
-    public void setIdentified(Boolean identified) { isIdentified = identified; }
+    public void setisIdentified(Boolean identified) { isIdentified = identified; }
 
     public Office getOffice() {
         return office;

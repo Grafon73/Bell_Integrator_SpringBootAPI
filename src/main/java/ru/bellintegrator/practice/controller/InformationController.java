@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.service.InfoService;
-import ru.bellintegrator.practice.view.CountryView;
-import ru.bellintegrator.practice.view.DocView;
-
-import java.util.List;
+import ru.bellintegrator.practice.view.MainDto;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -29,14 +26,14 @@ public class InformationController {
 
     @ApiOperation(value = "Получить список всех документов", httpMethod = "GET")
     @GetMapping("/docs")
-    public List<DocView> getAllDocs(){
-        return infoService.allDocs();
+    public MainDto getAllDocs(){
+        return new MainDto(infoService.allDocs());
     }
 
     @ApiOperation(value = "Получить список всех стран", httpMethod = "GET")
     @GetMapping("/InformationController")
-    public List<CountryView> getAllCountries(){
-        return infoService.allCountries();
+    public MainDto getAllCountries(){
+        return new MainDto(infoService.allCountries());
     }
 
 }

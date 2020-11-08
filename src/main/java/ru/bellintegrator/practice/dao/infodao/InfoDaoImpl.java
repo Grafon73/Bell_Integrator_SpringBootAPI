@@ -6,7 +6,6 @@ import ru.bellintegrator.practice.model.Country;
 import ru.bellintegrator.practice.model.Doc;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 

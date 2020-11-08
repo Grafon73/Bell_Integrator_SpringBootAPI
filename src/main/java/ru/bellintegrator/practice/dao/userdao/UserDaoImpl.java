@@ -2,7 +2,6 @@ package ru.bellintegrator.practice.dao.userdao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.model.Country;
 import ru.bellintegrator.practice.model.User;
 
 import javax.persistence.EntityManager;
@@ -110,8 +109,6 @@ public class UserDaoImpl implements UserDao{
         }
         if(lastName !=null &&obj.get("secondName")!=null ){
             predicates.add(builder.equal(obj.get("secondName"), lastName));
-        }else if(lastName !=null && obj.get("lastName")!=null){
-            predicates.add(builder.equal(obj.get("lastName"), lastName));
         }
         if(middleName !=null){
             predicates.add(builder.equal(obj.get("middleName"), middleName));
@@ -120,7 +117,7 @@ public class UserDaoImpl implements UserDao{
             predicates.add(builder.equal(obj.get("position"), position));
         }
         if(docCode !=null){
-            predicates.add(builder.equal(obj.get("docCode"), docCode));
+            predicates.add(builder.equal(obj.get("userDoc").get("docCode"), docCode));
         }
         if(citizenshipCode !=null){
             predicates.add(builder.equal(obj.get("citizenshipCode"), citizenshipCode));

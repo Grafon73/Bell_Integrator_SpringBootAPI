@@ -2,7 +2,6 @@ package ru.bellintegrator.practice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -145,11 +144,11 @@ public class Organization {
         this.phone = phone;
     }
 
-    public Boolean getActive() {
+    public Boolean getisActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setisActive(Boolean active) {
         isActive = active;
     }
 

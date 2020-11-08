@@ -46,12 +46,13 @@ public class OrgDaoImpl implements OrgDao {
 
     /**
      * {@inheritDoc}
+     * @return
      */
     @Override
-    public Organization loadByName(Organization organization) {
+    public List<Organization> loadByName(Organization organization) {
         CriteriaQuery<Organization> criteria = buildCriteria(organization);
         TypedQuery<Organization> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     /**
@@ -59,7 +60,7 @@ public class OrgDaoImpl implements OrgDao {
      */
     @Override
     public void save(Organization org) {
-         em.persist(org);
+        em.persist(org);
     }
 
     /**
@@ -74,15 +75,17 @@ public class OrgDaoImpl implements OrgDao {
         updatedOrg.setInn(organization.getInn());
         updatedOrg.setKpp(organization.getKpp());
         updatedOrg.setAddress(organization.getAddress());
-    if(!organization.getPhone().isEmpty()){
+    if(organization.getPhone()!=null){
         updatedOrg.setPhone(organization.getPhone());
     }
         em.merge(updatedOrg);
+
+
     }
 
     private CriteriaQuery<Organization> buildCriteria(Organization organization) {
-        String phone= organization.getPhone();
-        Boolean isActive = organization.getActive();
+        String inn= organization.getInn();
+        Boolean isActive = organization.getisActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteria = builder.createQuery(Organization.class);
 
@@ -90,11 +93,11 @@ public class OrgDaoImpl implements OrgDao {
 
         List<Predicate> predicates = new ArrayList<Predicate>();
         predicates.add(builder.equal(obj.get("name"), organization.getName()));
-        if(phone !=null){
-            predicates.add(builder.equal(obj.get("phone"), phone));
+        if(inn !=null){
+            predicates.add(builder.equal(obj.get("inn"), inn));
         }
         if(isActive != null){
-            predicates.add(builder.equal(obj.get("IsActive"), isActive));
+            predicates.add(builder.equal(obj.get("isActive"), isActive));
         }
         criteria.select(obj)
                 .where(predicates.toArray(new Predicate[]{}));

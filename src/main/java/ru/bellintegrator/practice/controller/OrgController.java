@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.model.Organization;
 import ru.bellintegrator.practice.service.OrgService;
-import ru.bellintegrator.practice.view.OrgView;
+import ru.bellintegrator.practice.view.MainDto;
+import ru.bellintegrator.practice.view.OrgFilterView;
 
 import java.util.List;
 
@@ -34,15 +35,14 @@ public class OrgController {
 
     @ApiOperation(value = "Получить список всех организаций", httpMethod = "GET")
     @GetMapping("/organization")
-    public List<OrgView> getAllOrgs(){
-        return orgService.allOrg();
+    public MainDto getAllOrgs(){
+        return new MainDto(orgService.allOrg());
     }
 
     @ApiOperation(value = "Получить организацию по ID", httpMethod = "GET")
     @GetMapping("/organization/{id}")
-    public Organization getOrg(@PathVariable String id){
-
-        return orgService.getByID(Integer.parseInt(id));
+    public MainDto getOrg(@PathVariable String id) {
+        return new MainDto(orgService.getByID(Integer.parseInt(id)));
     }
 
     @ApiOperation(value = "Добавить новую организацию", httpMethod = "POST")
@@ -51,23 +51,25 @@ public class OrgController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
     @PostMapping("/organization")
-    public Organization addOrg(@RequestBody Organization organization){
+    public String addOrg(@RequestBody Organization organization){
         orgService.add(organization);
-        return organization;
+        return "{\"result\" : \"success\"}";
     }
 
     @ApiOperation(value = "Обновить информацию об организации", httpMethod = "POST")
     @PostMapping("/organization/update")
-    public Organization updateOrg(@RequestBody Organization organization){
-        orgService.edit(organization);
-        return organization;
+    public String updateOrg(@RequestBody Organization organization){
+
+            orgService.edit(organization);
+            return "{\"result\" : \"success\"}";
+
     }
 
     @ApiOperation(value = "Получить организацию по фильтру", httpMethod = "POST")
     @PostMapping("/organization/list")
-    public Organization getOrg(@RequestBody Organization organization){
-
-        return orgService.getByName(organization);
+    public List<OrgFilterView> getOrg(@RequestBody Organization organization){
+        List<OrgFilterView> orgs = orgService.getByName(organization);
+        return orgs;
     }
 
 }

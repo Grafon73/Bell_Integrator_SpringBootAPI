@@ -4,16 +4,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * DTO-класс для Office
+ * DTO-класс для Office with Filter
  */
-public class OfficeView {
+public class OfficeFilterView {
 
     /**
      * ID Офиса
      */
     @NotNull(message = "ID не может быть пустым")
     private int id;
-
 
     /**
      * Наименование
@@ -22,18 +21,6 @@ public class OfficeView {
     @NotNull(message = "Название не может быть пустым")
     private String name;
 
-    /**
-     * Адрес
-     */
-    @Size(max = 255)
-    @NotNull(message = "Адрес не может быть пустым")
-    private String address;
-
-    /**
-     * Телефон
-     */
-    @Size(max = 20)
-    private String phone;
 
     /**
      * Статус организации
@@ -57,21 +44,7 @@ public class OfficeView {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public Boolean getisActive() {
         return isActive;
