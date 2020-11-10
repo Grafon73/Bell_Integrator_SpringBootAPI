@@ -2,8 +2,9 @@ package ru.bellintegrator.practice.service;
 
 import org.springframework.validation.annotation.Validated;
 import ru.bellintegrator.practice.model.Office;
-import ru.bellintegrator.practice.view.OfficeFilterView;
-import ru.bellintegrator.practice.view.OfficeView;
+import ru.bellintegrator.practice.view.office.OfficeFilterView;
+import ru.bellintegrator.practice.view.office.OfficeSaveView;
+import ru.bellintegrator.practice.view.office.OfficeView;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface OfficeService {
      *
      * @param office
      */
-    void add(Office office);
+    void add(OfficeSaveView office);
 
     /**
      * Получить Office по идентификатору
@@ -40,7 +41,7 @@ public interface OfficeService {
      *
      * @param office
      */
-    void edit(Office office);
+    void edit(OfficeView office);
 
     /**
      * Получить Office по фильтру

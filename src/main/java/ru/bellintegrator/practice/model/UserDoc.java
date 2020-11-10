@@ -1,7 +1,12 @@
 package ru.bellintegrator.practice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +19,8 @@ import javax.persistence.Version;
  * Документ юзера
  */
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "User_doc")
 public class UserDoc {
 
@@ -26,75 +33,32 @@ public class UserDoc {
      * Служебное поле hibernate
      */
     @Version
+    @JsonIgnore
     private Integer version;
 
     /**
      * Номер документа
      */
-    @Column(name = "doc_number", length = 20, nullable = false)
+    @Column(name = "doc_number", length = 20)
     private String docNumber;
 
     /**
      * Дата документа
      */
-    @Column(name = "doc_date", length = 20, nullable = false)
+    @Column(name = "doc_date", length = 20)
     private String docDate;
 
     /**
      * Код документа
      */
-    @Column(name = "doc_code", length = 50, nullable = false)
+    @Column(name = "doc_code", length = 50)
     private Integer docCode;
 
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="doc_code",
             insertable=false, updatable=false)
     private Doc doc;
 
-    /**
-     * Конструктор для hibernate
-     */
-    public UserDoc(){
 
-    }
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDocNumber() {
-        return docNumber;
-    }
-
-    public void setDocNumber(String docNumber) {
-        this.docNumber = docNumber;
-    }
-
-    public String getDocDate() {
-        return docDate;
-    }
-
-    public void setDocDate(String docDate) {
-        this.docDate = docDate;
-    }
-
-    public Integer getDocCode() {
-        return docCode;
-    }
-
-    public void setDocCode(Integer docCode) {
-        this.docCode = docCode;
-    }
-
-    public Doc getDoc() {
-        return doc;
-    }
-
-    public void setDoc(Doc doc) {
-        this.doc = doc;
-    }
 }

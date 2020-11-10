@@ -15,9 +15,9 @@ COMMENT ON TABLE Doc IS 'Документ';
 CREATE TABLE IF NOT EXISTS User_doc (
 id              INTEGER                 COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
 version         INTEGER     NOT NULL    COMMENT 'Служебное поле hibernate',
-doc_number      VARCHAR(20) NOT NULL    COMMENT 'Номер документа',
-doc_date        VARCHAR(20) NOT NULL    COMMENT 'Дата выдачи документа',
-doc_code        INTEGER     NOT NULL    COMMENT 'Код документа'
+doc_number      VARCHAR(20)             COMMENT 'Номер документа',
+doc_date        VARCHAR(20)             COMMENT 'Дата выдачи документа',
+doc_code        INTEGER                 COMMENT 'Код документа'
 );
 COMMENT ON TABLE User_doc IS 'Документ юзера';
 

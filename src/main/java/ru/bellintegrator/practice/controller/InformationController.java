@@ -31,7 +31,7 @@ public class InformationController {
     }
 
     @ApiOperation(value = "Получить список всех стран", httpMethod = "GET")
-    @GetMapping("/InformationController")
+    @GetMapping("/countries")
     public MainDto getAllCountries(){
         return new MainDto(infoService.allCountries());
     }

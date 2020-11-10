@@ -1,6 +1,8 @@
 package ru.bellintegrator.practice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,13 +15,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Офис
  */
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "office")
 public class Office {
 
@@ -32,6 +35,7 @@ public class Office {
      * Служебное поле hibernate
      */
     @Version
+    @JsonIgnore
     private Integer version;
 
     /**
@@ -74,87 +78,4 @@ public class Office {
             insertable=false, updatable=false)
     @JsonIgnore
     private Organization organization;
-
-    /**
-     * Конструктор для hibernate
-     */
-    public Office(){
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Integer getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgId(Integer orgId) {
-        this.orgId = orgId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Boolean getisActive() {
-        return isActive;
-    }
-
-    public void setisActive(Boolean active) {
-        isActive = active;
-    }
-
-    public Set<User> getUsers() {
-        if (users == null) {
-            users = new HashSet<>();
-        }
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
-
-    public void addUsers(User user) {
-        getUsers().add(user);
-    }
-
-    public void removeUsers(User user) {
-        getUsers().remove(user);
-
-    }
 }

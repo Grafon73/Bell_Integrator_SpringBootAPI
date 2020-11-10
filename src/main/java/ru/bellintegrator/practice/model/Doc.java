@@ -1,18 +1,23 @@
 package ru.bellintegrator.practice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.io.Serializable;
 
 /**
  * Документ
  */
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "doc")
-public class Doc implements Serializable {
+public class Doc {
 
 
     @Id
@@ -23,6 +28,7 @@ public class Doc implements Serializable {
      * Служебное поле hibernate
      */
     @Version
+    @JsonIgnore
     private Integer version;
 
     /**
@@ -31,28 +37,7 @@ public class Doc implements Serializable {
     @Column(name = "name", length = 255)
     private String name;
 
-    /**
-     * Конструктор для hibernate
-     */
-    public Doc(){
 
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }
 

@@ -1,4 +1,7 @@
-package ru.bellintegrator.practice.view;
+package ru.bellintegrator.practice.view.info;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -8,6 +11,8 @@ import javax.validation.constraints.Size;
 /**
  * DTO-класс для Country
  */
+@Getter
+@Setter
 public class CountryView {
     /**
      * Код страны
@@ -22,19 +27,5 @@ public class CountryView {
     @NotEmpty(message = "Название не может быть пустым")
     private String name;
 
-    public Integer getCode() {
-        return code;
-    }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

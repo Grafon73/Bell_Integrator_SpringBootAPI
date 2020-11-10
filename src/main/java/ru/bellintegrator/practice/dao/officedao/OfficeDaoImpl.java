@@ -2,8 +2,6 @@ package ru.bellintegrator.practice.dao.officedao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.exception.InvalidInputData;
-import ru.bellintegrator.practice.exception.NotFoundException;
 import ru.bellintegrator.practice.model.Office;
 
 import javax.persistence.EntityManager;
@@ -71,21 +69,8 @@ public class OfficeDaoImpl implements OfficeDao{
      */
     @Override
     public void edit(Office office) {
-
         int id = office.getId();
-        if(id<1){
-            throw new InvalidInputData("Office","Id");
-        }
         Office updatedOff = loadById(id);
-        if(updatedOff==null) {
-            throw new NotFoundException("Office",id);
-        }
-        if(office.getName()==null) {
-            throw new InvalidInputData("Office","Name");
-        }
-        if(office.getAddress()==null) {
-            throw new InvalidInputData("Office","Address");
-        }
         updatedOff.setName(office.getName());
         updatedOff.setAddress(office.getAddress());
         if(updatedOff.getPhone()==null) {
@@ -97,7 +82,7 @@ public class OfficeDaoImpl implements OfficeDao{
     private CriteriaQuery<Office> buildCriteria(Office office) {
         String name = office.getName();
         String phone = office.getPhone();
-        Boolean isActive = office.getisActive();
+        Boolean isActive = office.getIsActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
 

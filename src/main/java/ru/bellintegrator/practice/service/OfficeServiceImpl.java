@@ -9,8 +9,9 @@ import ru.bellintegrator.practice.exception.InvalidInputData;
 import ru.bellintegrator.practice.exception.NoDataFoundException;
 import ru.bellintegrator.practice.exception.NotFoundException;
 import ru.bellintegrator.practice.model.Office;
-import ru.bellintegrator.practice.view.OfficeFilterView;
-import ru.bellintegrator.practice.view.OfficeView;
+import ru.bellintegrator.practice.view.office.OfficeFilterView;
+import ru.bellintegrator.practice.view.office.OfficeSaveView;
+import ru.bellintegrator.practice.view.office.OfficeView;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +33,6 @@ public class OfficeServiceImpl implements OfficeService {
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
     @Transactional
@@ -52,17 +52,17 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public void add(Office office) {
+    public void add(OfficeSaveView office) {
         try {
-            dao.save(office);
+            Office newOffice = mapperFactory.getMapperFacade().map(office,Office.class);
+            dao.save(newOffice);
         }catch (Exception e){
-            throw new InvalidInputData("Office");
+            throw new InvalidInputData("Office", "or null Organization ID");
         }
     }
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
     @Transactional
@@ -80,23 +80,27 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public void edit(Office office) {
-
-            dao.edit(office);
-
-
-    }
+    public void edit(OfficeView office) {
+        try {
+            Office newOffice = mapperFactory.getMapperFacade().map(office, Office.class);
+            dao.edit(newOffice);
+        }catch (Exception e){
+            throw new InvalidInputData("Office", "or null ID");
+        }
+}
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
     public List<OfficeFilterView> getByName(Office office) {
+        if(office.getOrgId()==null){
+            throw new InvalidInputData("Office", "null orgId");
+        }
         try {
             List<Office> offices = dao.loadByName(office);
             if(offices.size()<1){
-                throw new NoDataFoundException();
+                throw new NotFoundException("Office");
             }
             return offices.stream()
                     .map(mapperFactory.getMapperFacade(Office.class, OfficeFilterView.class)::map)

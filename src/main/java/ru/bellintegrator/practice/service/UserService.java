@@ -1,9 +1,11 @@
 package ru.bellintegrator.practice.service;
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.model.User;
-import ru.bellintegrator.practice.view.UserFilterView;
-import ru.bellintegrator.practice.view.UserView;
+import ru.bellintegrator.practice.view.user.UserAddView;
+import ru.bellintegrator.practice.view.user.UserFilterViewIn;
+import ru.bellintegrator.practice.view.user.UserFilterViewOut;
+import ru.bellintegrator.practice.view.user.UserUpdateView;
+import ru.bellintegrator.practice.view.user.UserView;
 
 import java.util.List;
 
@@ -18,14 +20,14 @@ public interface UserService {
      *
      * @return
      */
-    List<UserView> allOrg();
+    List<UserView> allUsers();
 
     /**
      * Сохранить User
      *
      * @param user
      */
-    void add(User user);
+    void add(UserAddView user);
 
     /**
      * Получить User по идентификатору
@@ -40,7 +42,7 @@ public interface UserService {
      *
      * @param user
      */
-    void edit(User user);
+    void edit(UserUpdateView user);
 
     /**
      * Получить User по фильтру
@@ -48,5 +50,5 @@ public interface UserService {
      * @param user
      * @return List<User>
      */
-    List<UserFilterView> getByName(User user);
+    List<UserFilterViewOut> getByName(UserFilterViewIn user);
 }

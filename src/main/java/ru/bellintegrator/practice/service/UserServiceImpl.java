@@ -9,8 +9,11 @@ import ru.bellintegrator.practice.exception.InvalidInputData;
 import ru.bellintegrator.practice.exception.NoDataFoundException;
 import ru.bellintegrator.practice.exception.NotFoundException;
 import ru.bellintegrator.practice.model.User;
-import ru.bellintegrator.practice.view.UserFilterView;
-import ru.bellintegrator.practice.view.UserView;
+import ru.bellintegrator.practice.view.user.UserAddView;
+import ru.bellintegrator.practice.view.user.UserFilterViewIn;
+import ru.bellintegrator.practice.view.user.UserFilterViewOut;
+import ru.bellintegrator.practice.view.user.UserUpdateView;
+import ru.bellintegrator.practice.view.user.UserView;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +41,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public List<UserView> allOrg() {
+    public List<UserView> allUsers() {
         List<User> users = dao.all();
         if (users.isEmpty()) {
             throw new NoDataFoundException();
@@ -58,15 +61,25 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     * @param user
      */
     @Override
     @Transactional
-    public void add(User user) {
-        try {
-            dao.save(user);
-        }catch (Exception e){
-            throw new InvalidInputData("User");
-        }
+    public void add(UserAddView user) {
+         try {
+             mapperFactory
+                     .classMap(UserAddView.class, User.class)
+                     .field("docDate", "userDoc.docDate")
+                     .field("docNumber", "userDoc.docNumber")
+                     .field("docCode", "userDoc.docCode")
+                     .byDefault()
+                     .register();
+
+             User newUser = mapperFactory.getMapperFacade().map(user, User.class);
+             dao.save(newUser);
+         }catch (Exception e){
+             throw new InvalidInputData("User", "or null ID");
+         }
     }
 
     /**
@@ -94,40 +107,35 @@ public class UserServiceImpl implements UserService {
 
     /**
      * {@inheritDoc}
+     * @param user
      */
     @Override
     @Transactional
-    public void edit(User user) {
-        try {
-            dao.edit(user);
-        }catch (Exception e){
-            throw new InvalidInputData("User");
-        }
+    public void edit(UserUpdateView user) {
+            User newUser = mapperFactory.getMapperFacade().map(user, User.class);
+            dao.edit(newUser);
     }
 
     /**
      * {@inheritDoc}
      * @return
+     * @param user
      */
     @Override
-    public List<UserFilterView> getByName(User user) {
+    public List<UserFilterViewOut> getByName(UserFilterViewIn user) {
 
-        Integer officeId = user.getOfficeId();
-        if(officeId==null){
-            throw new InvalidInputData("User", "officeId");
-        }
-        try {
-            List<User> loadedOrg = dao.loadByName(user);
+
+            User newUser = mapperFactory.getMapperFacade().map(user, User.class);
+            List<User> loadedOrg = dao.loadByName(newUser);
             if(loadedOrg.size()<1){
+                System.out.println("Empty list");
                 throw new NotFoundException("User");
+
             }
             return loadedOrg.stream()
-                    .map(mapperFactory.getMapperFacade(User.class, UserFilterView.class)::map)
+                    .map(mapperFactory.getMapperFacade(User.class, UserFilterViewOut.class)::map)
                     .collect(Collectors.toList());
-        }catch (Exception e){
-            throw new NotFoundException("User");
-        }
-    }
 
+    }
 
 }

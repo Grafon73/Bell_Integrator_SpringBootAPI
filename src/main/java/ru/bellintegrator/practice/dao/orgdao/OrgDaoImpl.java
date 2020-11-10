@@ -85,7 +85,7 @@ public class OrgDaoImpl implements OrgDao {
 
     private CriteriaQuery<Organization> buildCriteria(Organization organization) {
         String inn= organization.getInn();
-        Boolean isActive = organization.getisActive();
+        Boolean isActive = organization.getIsActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteria = builder.createQuery(Organization.class);
 

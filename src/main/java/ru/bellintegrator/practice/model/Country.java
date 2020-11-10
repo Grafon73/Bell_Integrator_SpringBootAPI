@@ -1,18 +1,23 @@
 package ru.bellintegrator.practice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.io.Serializable;
 
 /**
  * Страна
  */
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "country")
-public class Country implements Serializable {
+public class Country{
 
     @Id
     @Column(name = "code")
@@ -22,6 +27,7 @@ public class Country implements Serializable {
      * Служебное поле hibernate
      */
     @Version
+    @JsonIgnore
     private Integer version;
 
     /**
@@ -29,28 +35,5 @@ public class Country implements Serializable {
      */
     @Column(name = "name", length = 50)
     private String name;
-
-
-    /**
-     * Конструктор для hibernate
-     */
-    public Country(){
-
-    }
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }

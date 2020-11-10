@@ -2,7 +2,10 @@ package ru.bellintegrator.practice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +22,8 @@ import javax.persistence.Version;
  * Юзер
  */
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "user")
 public class User {
     @Id
@@ -69,13 +74,6 @@ public class User {
     private String phone;
 
     /**
-     * Код документа
-     */
-    @Column(name = "doc_id")
-    private Integer docCode;
-
-
-    /**
      * Код страны
      */
     @Column(name = "citizenship")
@@ -93,121 +91,17 @@ public class User {
     @JsonIgnore
     private Office office;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id",
+            insertable=false, updatable=false)
     private UserDoc userDoc;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "citizenship",
             insertable=false, updatable=false)
-    @JsonIgnore
     private Country country;
 
 
-    /**
-     * Конструктор для hibernate
-     */
-    public User(){
 
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Integer getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(Integer officeId) {
-        this.officeId = officeId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Integer getDocCode() {
-        return docCode;
-    }
-
-    public void setDocCode(Integer docCode) {
-        this.docCode = docCode;
-    }
-
-    public Integer getCitizenshipCode() {
-        return citizenshipCode;
-    }
-
-    public void setCitizenshipCode(Integer citizenshipCode) {
-        this.citizenshipCode = citizenshipCode;
-    }
-
-    public Boolean getisIdentified() {return isIdentified;}
-
-    public void setisIdentified(Boolean identified) { isIdentified = identified; }
-
-    public Office getOffice() {
-        return office;
-    }
-
-    public void setOffice(Office office) {
-        this.office = office;
-    }
-
-    public UserDoc getUserDoc() {
-        return userDoc;
-    }
-
-    public void setUserDoc(UserDoc userDoc) {
-        this.userDoc = userDoc;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
 }

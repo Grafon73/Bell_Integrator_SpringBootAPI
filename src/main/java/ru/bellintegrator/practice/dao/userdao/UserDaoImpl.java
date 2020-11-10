@@ -3,6 +3,7 @@ package ru.bellintegrator.practice.dao.userdao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.model.User;
+import ru.bellintegrator.practice.model.UserDoc;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -45,12 +46,12 @@ public class UserDaoImpl implements UserDao{
 
     /**
      * {@inheritDoc}
-     * @param name
+     * @param
      * @return
      */
     @Override
     public List<User> loadByName(User user) {
-        CriteriaQuery<User> criteria = buildCriteria(user);
+        CriteriaQuery<User> criteria = buildCriteriaForFind(user);
         TypedQuery<User> query = em.createQuery(criteria);
         return query.getResultList();
     }
@@ -60,9 +61,7 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public void save(User user) {
-//        user.setCitizenshipName(em.createQuery("SELECT c FROM Country c where c.code = "+user.getCitizenshipCode(), Country.class).getSingleResult().getName());
         em.persist(user);
-
     }
 
     /**
@@ -83,20 +82,25 @@ public class UserDaoImpl implements UserDao{
             updatedUser.setMiddleName(user.getMiddleName());
         }
         updatedUser.setPosition(user.getPosition());
-        if(user.getDocCode()!=null) {
-            updatedUser.setDocCode(user.getDocCode());
+        if(user.getUserDoc()!=null) {
+            if (user.getUserDoc().getDocCode() != null) {
+                updatedUser.getUserDoc().setDocCode(user.getUserDoc().getDocCode());
+            }
         }
          em.merge(updatedUser);
     }
 
-    private CriteriaQuery<User> buildCriteria(User user) {
+    private CriteriaQuery<User> buildCriteriaForFind(User user) {
         String firstName = user.getFirstName();
         String lastName = user.getSecondName();
         String middleName = user.getMiddleName();
         String position = user.getPosition();
-        Integer docCode = user.getDocCode();
+        UserDoc userDoc = user.getUserDoc();
+        Integer docCode = null;
+        if(userDoc != null){
+            docCode=userDoc.getDocCode();
+        }
         Integer citizenshipCode = user.getCitizenshipCode();
-
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
 

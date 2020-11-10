@@ -2,8 +2,8 @@ package ru.bellintegrator.practice.service;
 
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.view.CountryView;
-import ru.bellintegrator.practice.view.DocView;
+import ru.bellintegrator.practice.view.info.CountryView;
+import ru.bellintegrator.practice.view.info.DocView;
 
 import java.util.List;
 

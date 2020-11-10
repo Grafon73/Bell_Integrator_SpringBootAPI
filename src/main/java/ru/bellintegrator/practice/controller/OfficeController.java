@@ -2,8 +2,6 @@ package ru.bellintegrator.practice.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bellintegrator.practice.model.Office;
 import ru.bellintegrator.practice.service.OfficeService;
 import ru.bellintegrator.practice.view.MainDto;
-import ru.bellintegrator.practice.view.OfficeFilterView;
+import ru.bellintegrator.practice.view.office.OfficeFilterView;
+import ru.bellintegrator.practice.view.office.OfficeSaveView;
+import ru.bellintegrator.practice.view.office.OfficeView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -45,13 +46,8 @@ public class OfficeController {
     }
 
     @ApiOperation(value = "Добавить новый офис", httpMethod = "POST")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = String.class),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Failure")})
-
     @PostMapping("/office/save")
-    public String addOffice(@RequestBody Office office){
+    public String addOffice(@Valid @RequestBody OfficeSaveView office){
         officeService.add(office);
         return "{\"result\" : \"success\"}";
 
@@ -59,14 +55,14 @@ public class OfficeController {
 
     @ApiOperation(value = "Обновить информацию об офисе", httpMethod = "POST")
     @PostMapping("/office/update")
-    public String updateOffice(@RequestBody Office office){
+    public String updateOffice(@Valid @RequestBody OfficeView office){
           officeService.edit(office);
           return "{\"result\" : \"success\"}";
     }
 
     @ApiOperation(value = "Получить офис по фильтру", httpMethod = "POST")
     @PostMapping("/office/list")
-    public MainDto getOrg(@RequestBody Office office){
+    public MainDto getByFilter(@RequestBody Office office){
 
         List<OfficeFilterView> offices = officeService.getByName(office);
          return new MainDto(offices);
