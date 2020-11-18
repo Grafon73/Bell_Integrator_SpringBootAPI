@@ -2,8 +2,9 @@ package ru.bellintegrator.practice.organization.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.bellintegrator.practice.office.model.Office;
 
 import javax.persistence.Column;
@@ -14,13 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * Организация
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "organization")
 public class Organization {
@@ -28,7 +31,7 @@ public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     /**
      * Служебное поле hibernate
@@ -85,4 +88,25 @@ public class Organization {
     @JsonIgnore
     private Set<Office> offices;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Organization)) return false;
+        Organization that = (Organization) o;
+        return id == that.id &&
+                Objects.equals(version, that.version) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(fullName, that.fullName) &&
+                Objects.equals(inn, that.inn) &&
+                Objects.equals(kpp, that.kpp) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(isActive, that.isActive) &&
+                Objects.equals(offices, that.offices);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, version, name, fullName, inn, kpp, address, phone, isActive, offices);
+    }
 }

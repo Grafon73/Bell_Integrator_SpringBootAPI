@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.service.OfficeService;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
 import ru.bellintegrator.practice.office.view.OfficeSaveView;
@@ -61,7 +60,7 @@ public class OfficeController {
 
     @ApiOperation(value = "Получить офис по фильтру", httpMethod = "POST")
     @PostMapping("/office/list")
-    public List<OfficeFilterView> getByFilter(@RequestBody Office office){
+    public List<OfficeFilterView> getByFilter(@RequestBody OfficeSaveView office){
          return officeService.getByName(office);
     }
 

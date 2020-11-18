@@ -17,7 +17,6 @@ import ru.bellintegrator.practice.user.view.UserUpdateView;
 import ru.bellintegrator.practice.user.view.UserView;
 
 import javax.validation.Valid;
-
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -66,4 +65,5 @@ public class UserController {
     public List<UserFilterViewOut> getByFilter(@Valid @RequestBody UserFilterViewIn user){
         return userService.getByName(user);
     }
+
 }

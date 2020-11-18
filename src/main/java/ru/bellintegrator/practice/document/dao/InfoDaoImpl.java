@@ -41,4 +41,24 @@ public class InfoDaoImpl implements InfoDao{
         criteria.from(Country.class);
         return em.createQuery(criteria).getResultList();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Country loadCountryByCode(Integer code) {
+        return  em.find(Country.class, code);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Doc loadDocByCode(Integer code) {
+        return  em.find(Doc.class, code);
+    }
+
+
+
 }

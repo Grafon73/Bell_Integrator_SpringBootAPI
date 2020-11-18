@@ -4,14 +4,16 @@ import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bellintegrator.practice.office.dao.OfficeDao;
 import ru.bellintegrator.practice.exceptionhandler.InvalidInputData;
 import ru.bellintegrator.practice.exceptionhandler.NoDataFoundException;
 import ru.bellintegrator.practice.exceptionhandler.NotFoundException;
+import ru.bellintegrator.practice.office.dao.OfficeDao;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
 import ru.bellintegrator.practice.office.view.OfficeSaveView;
 import ru.bellintegrator.practice.office.view.OfficeView;
+import ru.bellintegrator.practice.organization.dao.OrgDao;
+import ru.bellintegrator.practice.organization.model.Organization;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,12 +24,14 @@ import java.util.stream.Collectors;
 @Service
 public class OfficeServiceImpl implements OfficeService {
 
-    private final OfficeDao dao;
+    private final OfficeDao officeDao;
+    private final OrgDao orgDao;
     private final MapperFactory mapperFactory;
 
     @Autowired
-    public OfficeServiceImpl(OfficeDao dao, MapperFactory mapperFactory) {
-        this.dao = dao;
+    public OfficeServiceImpl(OfficeDao officeDao, OrgDao orgDao, MapperFactory mapperFactory) {
+        this.officeDao = officeDao;
+        this.orgDao = orgDao;
         this.mapperFactory = mapperFactory;
     }
 
@@ -37,7 +41,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public List<OfficeView> allOrg() {
-        List<Office> offices = dao.all();
+        List<Office> offices = officeDao.all();
         if (offices.isEmpty()) {
 
             throw new NoDataFoundException();
@@ -53,9 +57,14 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void add(OfficeSaveView office) {
+        Organization organization = orgDao.loadById(office.getOrgId());
+        if(organization==null){
+            throw new InvalidInputData("Organization", "or null Organization ID");
+        }
         try {
             Office newOffice = mapperFactory.getMapperFacade().map(office,Office.class);
-            dao.save(newOffice);
+            newOffice.setOrganization(organization);
+            officeDao.save(newOffice);
         }catch (Exception e){
             throw new InvalidInputData("Office", "or null Organization ID");
         }
@@ -67,7 +76,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public OfficeView getByID(int id) {
-        Office office = dao.loadById(id);
+        Office office = officeDao.loadById(id);
         if(office==null){
             throw new NotFoundException("Office",id);
         }
@@ -81,9 +90,10 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void edit(OfficeView office) {
+
         try {
             Office newOffice = mapperFactory.getMapperFacade().map(office, Office.class);
-            dao.edit(newOffice);
+            officeDao.edit(newOffice);
         }catch (Exception e){
             throw new InvalidInputData("Office", "or null ID");
         }
@@ -93,12 +103,13 @@ public class OfficeServiceImpl implements OfficeService {
      * {@inheritDoc}
      */
     @Override
-    public List<OfficeFilterView> getByName(Office office) {
-        if(office.getOrgId()==null){
+    public List<OfficeFilterView> getByName(OfficeSaveView office) {
+       Office officeEntity = mapperFactory.getMapperFacade().map(office, Office.class);
+        if(orgDao.loadById(office.getOrgId())==null){
             throw new InvalidInputData("Office", "null orgId");
         }
         try {
-            List<Office> offices = dao.loadByName(office);
+            List<Office> offices = officeDao.loadByName(officeEntity);
             if(offices.isEmpty()){
                 throw new NotFoundException("Office");
             }

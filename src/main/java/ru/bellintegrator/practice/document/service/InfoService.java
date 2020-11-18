@@ -15,15 +15,11 @@ public interface InfoService {
 
     /**
      * Получить все объекты Doc
-     *
-     * @return
      */
     List<DocView> allDocs();
 
     /**
      * Получить все объекты Country
-     *
-     * @return
      */
     List<CountryView> allCountries();
 }

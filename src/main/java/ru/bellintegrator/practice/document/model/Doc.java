@@ -1,8 +1,9 @@
 package ru.bellintegrator.practice.document.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,14 +15,15 @@ import javax.persistence.Version;
  * Документ
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "doc")
 public class Doc {
 
     @Id
     @Column(name = "code")
-    private int code;
+    private Integer code;
 
     /**
      * Служебное поле hibernate
@@ -35,7 +37,6 @@ public class Doc {
      */
     @Column(name = "name", length = 255)
     private String name;
-
 }
 
 

@@ -13,15 +13,22 @@ public interface InfoDao {
 
     /**
      * Получить все объекты Doc
-     *
-     * @return
      */
     List<Doc> allDocs();
 
     /**
      * Получить все объекты Country
-     *
-     * @return
      */
     List<Country> allCountries();
+
+    /**
+     * Получить Country по Code
+     */
+    Country loadCountryByCode(Integer code);
+
+    /**
+     * Получить Doc по code
+     */
+    Doc loadDocByCode(Integer code);
+
 }

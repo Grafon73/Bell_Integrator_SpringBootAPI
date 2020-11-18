@@ -1,10 +1,12 @@
-package ru.bellintegrator.practice.document.model;
+package ru.bellintegrator.practice.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ru.bellintegrator.practice.user.model.User;
+import lombok.Setter;
+import ru.bellintegrator.practice.document.model.Doc;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,13 +23,13 @@ import java.io.Serializable;
  * Документ юзера
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "User_doc")
 public class UserDoc implements Serializable {
 
     @Id
-    @Column(name = "id")
     private Integer id;
 
     /**
@@ -49,22 +51,14 @@ public class UserDoc implements Serializable {
     @Column(name = "doc_date", length = 20)
     private String docDate;
 
-    /**
-     * Код документа
-     */
-    @Column(name = "doc_code", length = 50)
-    private Integer docCode;
 
-
-   @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "doc_code", referencedColumnName = "code",
-           insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @JoinColumn(name = "doc_code", referencedColumnName = "code")
     private Doc doc;
 
-   @OneToOne(fetch = FetchType.LAZY)
-   @MapsId()
-   @JoinColumn(name = "id")
-   private User user;
 
-
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 }

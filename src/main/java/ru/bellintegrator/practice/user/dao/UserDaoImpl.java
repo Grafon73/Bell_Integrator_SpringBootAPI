@@ -3,7 +3,7 @@ package ru.bellintegrator.practice.user.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.bellintegrator.practice.user.model.User;
-import ru.bellintegrator.practice.document.model.UserDoc;
+import ru.bellintegrator.practice.user.model.UserDoc;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -59,32 +59,19 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public void save(User user) {
-        em.persist(user);
+       em.persist(user);
     }
+
+
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void edit(User user) {
-        int id = user.getId();
-        User updatedUser = loadById(id);
-        if(user.getOfficeId()!=null){
-            updatedUser.setOfficeId(user.getOfficeId());
-        }
-        updatedUser.setFirstName(user.getFirstName());
-        if(!user.getSecondName().isEmpty()){
-            updatedUser.setSecondName(user.getSecondName());
-        }
-        if(!user.getMiddleName().isEmpty()){
-            updatedUser.setMiddleName(user.getMiddleName());
-        }
-        updatedUser.setPosition(user.getPosition());
-        if(user.getUserDoc()!=null && user.getUserDoc().getDocCode() != null) {
-                updatedUser.getUserDoc().setDocCode(user.getUserDoc().getDocCode());
-            }
-         em.merge(updatedUser);
+         em.merge(user);
     }
+
 
     private CriteriaQuery<User> buildCriteriaForFind(User user) {
         String firstName = user.getFirstName();
@@ -94,9 +81,9 @@ public class UserDaoImpl implements UserDao{
         UserDoc userDoc = user.getUserDoc();
         Integer docCode = null;
         if(userDoc != null){
-            docCode=userDoc.getDocCode();
+            docCode=userDoc.getDoc().getCode();
         }
-        Integer citizenshipCode = user.getCitizenshipCode();
+        Integer citizenshipCode = user.getCountry().getCode();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
 
@@ -117,16 +104,15 @@ public class UserDaoImpl implements UserDao{
             predicates.add(builder.equal(obj.get("position"), position));
         }
         if(docCode !=null){
-            predicates.add(builder.equal(obj.get("userDoc").get("docCode"), docCode));
+            predicates.add(builder.equal(obj.get("userDoc").get("doc").get("code"), docCode));
         }
         if(citizenshipCode !=null){
-            predicates.add(builder.equal(obj.get("citizenshipCode"), citizenshipCode));
+            predicates.add(builder.equal(obj.get("country").get("code"), citizenshipCode));
         }
         criteria.select(obj)
                 .where(predicates.toArray(new Predicate[]{}));
 
         return criteria;
     }
-
 
 }

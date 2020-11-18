@@ -1,10 +1,11 @@
 package ru.bellintegrator.practice.office.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ru.bellintegrator.practice.user.model.User;
+import lombok.Setter;
 import ru.bellintegrator.practice.organization.model.Organization;
+import ru.bellintegrator.practice.user.model.User;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,8 @@ import java.util.Set;
  * Офис
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "office")
 public class Office {
@@ -31,7 +33,7 @@ public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     /**
      * Служебное поле hibernate
@@ -76,8 +78,7 @@ public class Office {
     private Set<User> users;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "org_id",
-            insertable=false, updatable=false)
-    @JsonIgnore
+    @JoinColumn(name = "org_id",insertable = false, updatable = false)
     private Organization organization;
+
 }

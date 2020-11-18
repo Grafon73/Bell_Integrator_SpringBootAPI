@@ -65,10 +65,10 @@ EDIT
   "position":"директор", 
   "phone":"+7 (980) 244-79-29",
   "docCode":"15",
-  "docName":"Разрешение на временное проживание в РФ",
+  "docName":"Разрешение на временное проживание в Российской Федерации",
   "docNumber":"1475826497",
   "docDate":"2013-07-06",
-  "citizenshipCode":"859",
+  "citizenshipCode":"840",
   "isIdentified": "true" 
 }
  
@@ -76,8 +76,8 @@ EDIT
 Изменение офиса
 {
  "id":"1",
- "name":"sadaf1214",
- "address":"г. asdfaaa пер, дом 114", 
+ "name":"Измененный офис",
+ "address":"г. ИЗМЕНЕННЫЙ пер, дом 114",
  "phone":"+7 (980) 244-79-29",
  "isActive": "true"
 }

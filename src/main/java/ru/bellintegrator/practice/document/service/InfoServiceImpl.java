@@ -18,10 +18,8 @@ import java.util.stream.Collectors;
 @Service
 public class InfoServiceImpl implements InfoService{
 
-
     private final InfoDao dao;
     private final MapperFactory mapperFactory;
-
 
     @Autowired
     public InfoServiceImpl(InfoDao dao,MapperFactory mapperFactory) {
@@ -31,7 +29,6 @@ public class InfoServiceImpl implements InfoService{
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
     public List<DocView> allDocs() {
@@ -44,7 +41,6 @@ public class InfoServiceImpl implements InfoService{
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
     public List<CountryView> allCountries() {

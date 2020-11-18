@@ -2,10 +2,10 @@ package ru.bellintegrator.practice.user.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.bellintegrator.practice.document.model.Country;
-import ru.bellintegrator.practice.document.model.UserDoc;
 import ru.bellintegrator.practice.office.model.Office;
 
 import javax.persistence.CascadeType;
@@ -25,7 +25,8 @@ import javax.persistence.Version;
  * Юзер
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "user")
 public class User {
@@ -76,11 +77,6 @@ public class User {
     @Column(name = "phone", length = 20)
     private String phone;
 
-    /**
-     * Код страны
-     */
-    @Column(name = "citizenship")
-    private Integer citizenshipCode;
 
     /**
      * Статус идентификации
@@ -95,13 +91,11 @@ public class User {
     private Office office;
 
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user",
-    cascade = CascadeType.ALL, optional = false)
+    @OneToOne(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private UserDoc userDoc;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "citizenship", referencedColumnName = "code",
-            insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "citizenship", referencedColumnName = "code")
     private Country country;
 
 }
