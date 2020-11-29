@@ -60,7 +60,6 @@ public class Office {
     @Column(name = "address", length = 255)
     private String address;
 
-
     /**
      * Телефон
      */
@@ -80,5 +79,4 @@ public class Office {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id",insertable = false, updatable = false)
     private Organization organization;
-
 }

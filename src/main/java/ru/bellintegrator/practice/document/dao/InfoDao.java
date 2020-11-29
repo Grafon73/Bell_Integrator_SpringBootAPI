@@ -30,5 +30,4 @@ public interface InfoDao {
      * Получить Doc по code
      */
     Doc loadDocByCode(Integer code);
-
 }

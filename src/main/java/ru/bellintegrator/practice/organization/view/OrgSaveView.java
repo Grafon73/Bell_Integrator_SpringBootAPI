@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.organization.view;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
+@AllArgsConstructor
 public class OrgSaveView {
 
     /**
@@ -48,7 +50,6 @@ public class OrgSaveView {
     @NotNull(message = "Адрес не может быть пустым")
     private String address;
 
-
     /**
      * Телефон
      */
@@ -59,5 +60,4 @@ public class OrgSaveView {
      * Статус организации
      */
     private Boolean isActive;
-
 }

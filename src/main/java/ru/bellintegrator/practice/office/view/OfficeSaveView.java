@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.office.view;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
+@AllArgsConstructor
 public class OfficeSaveView {
 
     /**
@@ -17,7 +19,6 @@ public class OfficeSaveView {
      */
     @NotNull(message = "ID организации не может быть пустым")
     private int orgId;
-
 
     /**
      * Наименование
@@ -38,5 +39,4 @@ public class OfficeSaveView {
      * Статус организации
      */
     private Boolean isActive;
-
 }

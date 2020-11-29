@@ -44,5 +44,4 @@ public interface UserDao {
      * @param user
      */
     void edit(User user);
-
 }

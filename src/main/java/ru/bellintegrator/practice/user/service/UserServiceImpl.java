@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     private final MapperFactory mapperFactory;
     private final InfoDao infoDao;
 
-
     @Autowired
     public UserServiceImpl(UserDao dao,MapperFactory mapperFactory,InfoDao infoDao) {
         this.mapperFactory=mapperFactory;
@@ -50,7 +49,6 @@ public class UserServiceImpl implements UserService {
         if (users.isEmpty()) {
             throw new NoDataFoundException();
         }
-
         mapperFactory
                 .classMap(User.class, UserView.class)
                 .field("userDoc.doc.name","docName")
@@ -79,9 +77,7 @@ public class UserServiceImpl implements UserService {
                      .field("citizenshipCode","country.code")
                      .byDefault()
                      .register();
-
              User newUser = mapperFactory.getMapperFacade().map(user, User.class);
-
         if (user.getCitizenshipCode() != null) {
             Country citizenship = infoDao.loadCountryByCode(user.getCitizenshipCode());
             if(citizenship==null){
@@ -89,7 +85,6 @@ public class UserServiceImpl implements UserService {
             }
             newUser.setCountry(citizenship);
         }
-
         UserDoc newUserUserDoc = newUser.getUserDoc();
         if(newUserUserDoc!=null) {
             newUserUserDoc.setUser(newUser);
@@ -97,14 +92,11 @@ public class UserServiceImpl implements UserService {
                 if (user.getDocCode() != null) {
                     doc = infoDao.loadDocByCode(user.getDocCode());
                     newUserUserDoc.setDoc(doc);
-
                 }
                 if (doc == null) {
                     throw new NotFoundException("This Document Code");
                 }
-
                 newUser.setUserDoc(newUserUserDoc);
-
         }
              dao.save(newUser);
          }catch (Exception e){
@@ -131,7 +123,6 @@ public class UserServiceImpl implements UserService {
                 .field("country.code","citizenshipCode")
                 .byDefault()
                 .register();
-
         return mapperFactory.getMapperFacade().map(user, UserView.class);
     }
 
@@ -151,7 +142,6 @@ public class UserServiceImpl implements UserService {
                 .byDefault()
                 .register();
         User newUser = mapperFactory.getMapperFacade().map(user, User.class);
-
         Integer id = newUser.getId();
         User updatedUser = dao.loadById(id);
         if (updatedUser == null) {
@@ -215,7 +205,6 @@ public class UserServiceImpl implements UserService {
             List<User> loadedOrg = dao.loadByName(newUser);
             if(loadedOrg.isEmpty()){
                 throw new NotFoundException("User");
-
             }
         mapperFactory
                 .classMap(User.class, UserView.class)
@@ -226,7 +215,5 @@ public class UserServiceImpl implements UserService {
             return loadedOrg.stream()
                     .map(mapperFactory.getMapperFacade(User.class, UserFilterViewOut.class)::map)
                     .collect(Collectors.toList());
-
     }
-
 }

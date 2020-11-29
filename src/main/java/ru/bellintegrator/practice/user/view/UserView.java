@@ -87,5 +87,4 @@ public class UserView {
      * Идентификация юзера
      */
     private Boolean isIdentified;
-
 }

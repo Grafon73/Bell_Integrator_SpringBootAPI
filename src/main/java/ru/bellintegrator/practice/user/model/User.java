@@ -77,7 +77,6 @@ public class User {
     @Column(name = "phone", length = 20)
     private String phone;
 
-
     /**
      * Статус идентификации
      */
@@ -90,12 +89,10 @@ public class User {
     @JsonIgnore
     private Office office;
 
-
     @OneToOne(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private UserDoc userDoc;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "citizenship", referencedColumnName = "code")
     private Country country;
-
 }

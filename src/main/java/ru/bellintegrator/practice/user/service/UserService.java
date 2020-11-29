@@ -39,5 +39,4 @@ public interface UserService {
      * Получить User по фильтру
      */
     List<UserFilterViewOut> getByName(UserFilterViewIn user);
-
 }

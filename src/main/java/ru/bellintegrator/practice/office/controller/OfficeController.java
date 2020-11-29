@@ -48,7 +48,6 @@ public class OfficeController {
     public OfficeSaveView addOffice(@Valid @RequestBody OfficeSaveView office){
         officeService.add(office);
         return office;
-
     }
 
     @ApiOperation(value = "Обновить информацию об офисе", httpMethod = "POST")
@@ -63,5 +62,4 @@ public class OfficeController {
     public List<OfficeFilterView> getByFilter(@RequestBody OfficeSaveView office){
          return officeService.getByName(office);
     }
-
 }

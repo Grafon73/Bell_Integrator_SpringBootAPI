@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class DocView {
-
     /**
      * Код документа
      */
@@ -26,6 +25,4 @@ public class DocView {
     @Size(max = 255)
     @NotEmpty(message = "Название не может быть пустым")
     private String name;
-
-
 }

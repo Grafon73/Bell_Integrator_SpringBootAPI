@@ -26,7 +26,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(value = "/api", produces = APPLICATION_JSON_VALUE)
 public class UserController {
 
-
     private final UserService userService;
 
     @Autowired
@@ -65,5 +64,4 @@ public class UserController {
     public List<UserFilterViewOut> getByFilter(@Valid @RequestBody UserFilterViewIn user){
         return userService.getByName(user);
     }
-
 }

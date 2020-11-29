@@ -10,7 +10,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,7 +31,8 @@ public class OrgDaoImpl implements OrgDao {
      */
     @Override
     public List<Organization> all() {
-        TypedQuery<Organization> query = em.createQuery("SELECT o FROM Organization o", Organization.class);
+        TypedQuery<Organization> query = em
+                .createQuery("SELECT o FROM Organization o", Organization.class);
         return query.getResultList();
     }
 
@@ -78,8 +78,6 @@ public class OrgDaoImpl implements OrgDao {
         updatedOrg.setPhone(organization.getPhone());
     }
         em.merge(updatedOrg);
-
-
     }
 
     private CriteriaQuery<Organization> buildCriteria(Organization organization) {
@@ -87,20 +85,16 @@ public class OrgDaoImpl implements OrgDao {
         Boolean isActive = organization.getIsActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Organization> criteria = builder.createQuery(Organization.class);
-
         Root<Organization> obj = criteria.from(Organization.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(builder.equal(obj.get("name"), organization.getName()));
+        Predicate predicate = builder.conjunction();
+        predicate = builder.and(predicate,builder.equal(obj.get("name"), organization.getName()));
         if(inn !=null){
-            predicates.add(builder.equal(obj.get("inn"), inn));
+            predicate = builder.and(predicate,builder.equal(obj.get("inn"), inn));
         }
         if(isActive != null){
-            predicates.add(builder.equal(obj.get("isActive"), isActive));
+            predicate = builder.and(predicate,builder.equal(obj.get("isActive"), isActive));
         }
-        criteria.select(obj)
-                .where(predicates.toArray(new Predicate[]{}));
-
+        criteria.select(obj).where(predicate);
         return criteria;
     }
 }

@@ -10,7 +10,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +25,6 @@ public class OfficeDaoImpl implements OfficeDao{
     public OfficeDaoImpl(EntityManager em) {
         this.em = em;
     }
-
 
     /**
      * {@inheritDoc}
@@ -77,30 +75,25 @@ public class OfficeDaoImpl implements OfficeDao{
         }
         em.merge(updatedOff);
     }
-
     private CriteriaQuery<Office> buildCriteria(Office office) {
         String name = office.getName();
         String phone = office.getPhone();
         Boolean isActive = office.getIsActive();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
-
         Root<Office> obj = criteria.from(Office.class);
-
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(builder.equal(obj.get("orgId"), office.getOrgId()));
+        Predicate predicate = builder.conjunction();
+        predicate = builder.and(predicate,builder.equal(obj.get("orgId"), office.getOrgId()));
         if(name !=null){
-            predicates.add(builder.equal(obj.get("name"), name));
+            predicate = builder.and(predicate,builder.equal(obj.get("name"), name));
         }
         if(phone !=null){
-            predicates.add(builder.equal(obj.get("phone"), phone));
+            predicate = builder.and(predicate,builder.equal(obj.get("phone"), phone));
         }
         if(isActive != null){
-            predicates.add(builder.equal(obj.get("isActive"), isActive));
+            predicate = builder.and(predicate,builder.equal(obj.get("isActive"), isActive));
         }
-        criteria.select(obj)
-                .where(predicates.toArray(new Predicate[]{}));
-
+        criteria.select(obj).where(predicate);
         return criteria;
     }
 }

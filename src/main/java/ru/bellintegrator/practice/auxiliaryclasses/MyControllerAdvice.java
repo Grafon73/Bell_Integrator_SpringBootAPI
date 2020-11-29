@@ -27,11 +27,14 @@ public class MyControllerAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> aClass,
                                   ServerHttpRequest serverHttpRequest,
                                   ServerHttpResponse serverHttpResponse) {
-            if (methodParameter.getMethod()!=null
-                    && (methodParameter.getMethod().getName().startsWith("add")
-                    || methodParameter.getMethod().getName().startsWith("update"))) {
+                if (methodParameter.getMethod() != null) {
+            if (methodParameter.getMethod().getName().startsWith("add")
+                    || methodParameter.getMethod().getName().startsWith("update")) {
                 return Collections.singletonMap("result", "success");
             } else return new MainDtoView(body);
+        }else{
+            return body;
         }
 
+    }
 }

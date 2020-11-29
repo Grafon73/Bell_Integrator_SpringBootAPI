@@ -51,11 +51,9 @@ public class UserDoc implements Serializable {
     @Column(name = "doc_date", length = 20)
     private String docDate;
 
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "doc_code", referencedColumnName = "code")
     private Doc doc;
-
 
     @OneToOne
     @MapsId

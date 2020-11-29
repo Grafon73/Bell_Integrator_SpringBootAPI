@@ -9,6 +9,7 @@ import ru.bellintegrator.practice.exceptionhandler.NoDataFoundException;
 import ru.bellintegrator.practice.exceptionhandler.NotFoundException;
 import ru.bellintegrator.practice.organization.dao.OrgDao;
 import ru.bellintegrator.practice.organization.model.Organization;
+import ru.bellintegrator.practice.organization.view.OrgFilterIn;
 import ru.bellintegrator.practice.organization.view.OrgFilterOutView;
 import ru.bellintegrator.practice.organization.view.OrgSaveView;
 import ru.bellintegrator.practice.organization.view.OrgUpdateView;
@@ -25,7 +26,6 @@ public class OrgServiceImpl implements OrgService {
     private final OrgDao dao;
     private final MapperFactory mapperFactory;
 
-
     @Autowired
     public OrgServiceImpl(OrgDao dao, MapperFactory mapperFactory) {
         this.mapperFactory=mapperFactory;
@@ -41,7 +41,6 @@ public class OrgServiceImpl implements OrgService {
     public List<OrgUpdateView> allOrg() {
         List<Organization> orgs = dao.all();
         if (orgs.isEmpty()) {
-
             throw new NoDataFoundException();
         }
         return orgs.stream()
@@ -71,7 +70,6 @@ public class OrgServiceImpl implements OrgService {
         if(organization==null){
             throw new NotFoundException("Organization",id);
         }
-
       return mapperFactory.getMapperFacade().map(organization, OrgUpdateView.class);
     }
 
@@ -95,13 +93,14 @@ public class OrgServiceImpl implements OrgService {
      * @return
      */
     @Override
-    public List<OrgFilterOutView> getByName(Organization organization) {
+    public List<OrgFilterOutView> getByName(OrgFilterIn organization) {
+        Organization orgEntity = mapperFactory.getMapperFacade().map(organization,Organization.class);
         String name = organization.getName();
         if(name==null){
             throw new InvalidInputData("Organization", "null name");
         }
         try {
-            List<Organization> loadedOrg = dao.loadByName(organization);
+            List<Organization> loadedOrg = dao.loadByName(orgEntity);
             if(loadedOrg.isEmpty()){
                 throw new NotFoundException("Organization");
             }

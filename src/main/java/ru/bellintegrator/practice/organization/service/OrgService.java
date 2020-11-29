@@ -1,7 +1,7 @@
 package ru.bellintegrator.practice.organization.service;
 
 import org.springframework.validation.annotation.Validated;
-import ru.bellintegrator.practice.organization.model.Organization;
+import ru.bellintegrator.practice.organization.view.OrgFilterIn;
 import ru.bellintegrator.practice.organization.view.OrgFilterOutView;
 import ru.bellintegrator.practice.organization.view.OrgSaveView;
 import ru.bellintegrator.practice.organization.view.OrgUpdateView;
@@ -43,13 +43,11 @@ public interface OrgService {
      */
     void edit(OrgUpdateView organization);
 
-
     /**
      * Получить Organization по имени
      *
      * @param organization
      * @return List<OrgFilterOutView>
      */
-    List<OrgFilterOutView> getByName(Organization organization);
-
+    List<OrgFilterOutView> getByName(OrgFilterIn organization);
 }

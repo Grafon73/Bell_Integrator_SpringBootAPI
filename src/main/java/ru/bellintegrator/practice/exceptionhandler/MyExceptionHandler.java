@@ -57,13 +57,14 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler {
     }
     @Override
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("error", ex.getBindingResult().getAllErrors().get(0).getObjectName()+" "+
                 ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
-
-
 }

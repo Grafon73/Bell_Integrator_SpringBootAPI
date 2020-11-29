@@ -26,6 +26,4 @@ public class CountryView {
     @Size(max = 50)
     @NotEmpty(message = "Название не может быть пустым")
     private String name;
-
-
 }

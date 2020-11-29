@@ -50,7 +50,6 @@ public class InfoDaoImpl implements InfoDao{
         return  em.find(Country.class, code);
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -58,7 +57,4 @@ public class InfoDaoImpl implements InfoDao{
     public Doc loadDocByCode(Integer code) {
         return  em.find(Doc.class, code);
     }
-
-
-
 }

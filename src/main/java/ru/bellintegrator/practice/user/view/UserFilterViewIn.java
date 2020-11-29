@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.user.view;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
+@AllArgsConstructor
 public class UserFilterViewIn {
 
     /**
@@ -47,5 +49,4 @@ public class UserFilterViewIn {
      * Код страны
      */
     private Integer citizenshipCode;
-
 }

@@ -11,7 +11,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,8 +61,6 @@ public class UserDaoImpl implements UserDao{
        em.persist(user);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -71,7 +68,6 @@ public class UserDaoImpl implements UserDao{
     public void edit(User user) {
          em.merge(user);
     }
-
 
     private CriteriaQuery<User> buildCriteriaForFind(User user) {
         String firstName = user.getFirstName();
@@ -86,33 +82,30 @@ public class UserDaoImpl implements UserDao{
         Integer citizenshipCode = user.getCountry().getCode();
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
-
         Root<User> obj = criteria.from(User.class);
+        Predicate predicate = builder.conjunction();
+        predicate = builder.and(predicate,builder.equal(obj.get("officeId"), user.getOfficeId()));
 
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(builder.equal(obj.get("officeId"), user.getOfficeId()));
         if(firstName !=null){
-            predicates.add(builder.equal(obj.get("firstName"), firstName));
+            predicate = builder.and(predicate,builder.equal(obj.get("firstName"), firstName));
         }
         if(lastName !=null &&obj.get("secondName")!=null ){
-            predicates.add(builder.equal(obj.get("secondName"), lastName));
+            predicate = builder.and(predicate,builder.equal(obj.get("secondName"), lastName));
         }
         if(middleName !=null){
-            predicates.add(builder.equal(obj.get("middleName"), middleName));
+            predicate = builder.and(predicate,builder.equal(obj.get("middleName"), middleName));
         }
         if(position !=null){
-            predicates.add(builder.equal(obj.get("position"), position));
+            predicate = builder.and(predicate,builder.equal(obj.get("position"), position));
         }
         if(docCode !=null){
-            predicates.add(builder.equal(obj.get("userDoc").get("doc").get("code"), docCode));
+            predicate = builder.and(predicate,builder.equal(obj.get("userDoc").get("doc").get("code"), docCode));
         }
         if(citizenshipCode !=null){
-            predicates.add(builder.equal(obj.get("country").get("code"), citizenshipCode));
+            predicate = builder.and(predicate,builder.equal(obj.get("country").get("code"), citizenshipCode));
         }
-        criteria.select(obj)
-                .where(predicates.toArray(new Predicate[]{}));
+        criteria.select(obj).where(predicate);
 
         return criteria;
     }
-
 }

@@ -30,7 +30,6 @@ public interface OfficeDao {
      */
     void save(Office office);
 
-
     /**
      * Изменить Office
      */

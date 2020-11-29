@@ -4,23 +4,24 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+
 /**
- * DTO-класс для Organization with Filter Respond
+ * DTO-класс для Organization with Filter Request
  */
 @Getter
 @Setter
 @AllArgsConstructor
-public class OrgFilterOutView {
+public class OrgFilterIn {
 
-    /**
-     * ID Организации
-     */
-    private int id;
-
-    /**
+     /**
      * Наименование
      */
     private String name;
+
+    /**
+     * ИНН
+     */
+    private String inn;
 
     /**
      * Статус организации

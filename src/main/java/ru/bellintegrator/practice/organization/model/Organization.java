@@ -70,7 +70,6 @@ public class Organization {
     @Column(name = "address", length = 255, nullable = false)
     private String address;
 
-
     /**
      * Телефон
      */
@@ -83,7 +82,6 @@ public class Organization {
     @Column(name = "is_active")
     private Boolean isActive;
 
-
     @OneToMany(mappedBy="organization")
     @JsonIgnore
     private Set<Office> offices;
@@ -94,7 +92,6 @@ public class Organization {
         if (!(o instanceof Organization)) return false;
         Organization that = (Organization) o;
         return id == that.id &&
-                Objects.equals(version, that.version) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(fullName, that.fullName) &&
                 Objects.equals(inn, that.inn) &&
@@ -107,6 +104,6 @@ public class Organization {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, version, name, fullName, inn, kpp, address, phone, isActive, offices);
+        return Objects.hash(id, name, fullName, inn, kpp, address, phone, isActive, offices);
     }
 }

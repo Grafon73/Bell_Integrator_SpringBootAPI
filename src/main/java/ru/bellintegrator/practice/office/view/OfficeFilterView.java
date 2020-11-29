@@ -20,10 +20,8 @@ public class OfficeFilterView {
      */
     private String name;
 
-
     /**
      * Статус организации
      */
     private Boolean isActive;
-
 }

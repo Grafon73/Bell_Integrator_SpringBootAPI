@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bellintegrator.practice.organization.model.Organization;
 import ru.bellintegrator.practice.organization.service.OrgService;
+import ru.bellintegrator.practice.organization.view.OrgFilterIn;
 import ru.bellintegrator.practice.organization.view.OrgFilterOutView;
 import ru.bellintegrator.practice.organization.view.OrgSaveView;
 import ru.bellintegrator.practice.organization.view.OrgUpdateView;
@@ -57,13 +57,11 @@ public class OrgController {
     public OrgUpdateView updateOrganization(@Valid @RequestBody OrgUpdateView organization){
             orgService.edit(organization);
             return organization;
-
     }
 
     @ApiOperation(value = "Получить организацию по фильтру", httpMethod = "POST")
     @PostMapping("/organization/list")
-    public List<OrgFilterOutView> getOrganizationByFilter(@RequestBody Organization organization){
+    public List<OrgFilterOutView> getOrganizationByFilter(@RequestBody OrgFilterIn organization){
         return orgService.getByName(organization);
     }
-
 }

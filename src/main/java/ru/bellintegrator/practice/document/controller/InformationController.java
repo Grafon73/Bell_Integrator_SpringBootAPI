@@ -26,8 +26,8 @@ public class InformationController {
     public InformationController(InfoService infoService) {
         this.infoService = infoService;
     }
-
     @ApiOperation(value = "Получить список всех документов", httpMethod = "GET")
+
     @GetMapping("/docs")
     public List<DocView> getAllDocs(){
         return infoService.allDocs();

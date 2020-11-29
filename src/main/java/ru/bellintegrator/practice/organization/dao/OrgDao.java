@@ -39,7 +39,6 @@ public interface OrgDao {
      */
     void save(Organization org);
 
-
     /**
      * Изменить Organization
      *

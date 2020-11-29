@@ -36,7 +36,6 @@ public class InfoServiceImpl implements InfoService{
         return docs.stream()
                 .map(mapperFactory.getMapperFacade(Doc.class, DocView.class)::map)
                 .collect(Collectors.toList());
-
     }
 
     /**
