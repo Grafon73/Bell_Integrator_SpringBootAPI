@@ -22,9 +22,6 @@ Task for Bell Integrator
 -Редактирование информации
 
 
-
-
-
 Используемое ПО:
 
 -Apache Maven 4.0.0
@@ -34,3 +31,8 @@ Task for Bell Integrator
 -spring-boot-starter 2.3.4.RELEASE
 
 -База данных H2
+
+Установка и запуск:
+
+Основное окно:
+![alt text](screenshots/fSwaggerMainPage.png "Основное окно Swagger")
