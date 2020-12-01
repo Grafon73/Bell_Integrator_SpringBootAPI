@@ -35,4 +35,4 @@ Task for Bell Integrator
 Установка и запуск:
 
 Основное окно:
-![alt text](screenshots/fSwaggerMainPage.png "Основное окно Swagger")
+![alt text](screenshots/SwaggerMainPage.png "Основное окно Swagger")
