@@ -48,17 +48,17 @@ Task for Bell Integrator
 
 **Пример использования программы для добавления нового пользователя**
 1. Открываем файл с тестовыми данными. И копируем инофрмацию в Json формате
-![alt text](screenshots/SwaggerMainPage.png "Json для добавления новго Юзера")
+![alt text](screenshots/AddNewUser.png "Json для добавления новго Юзера")
 2. По адресу http://localhost:8888/swagger-ui.html находим интересющий нас раздел и контроллер. В нашем случае раздел - "user-controller
 Управление информацией о людях" и операция добавления нового пользователя "/api/user/save
 Добавить нового человека"
-![alt text](screenshots/SwaggerMainPage.png "Необходимая нам операция доваления")
+![alt text](screenshots/SwaggerAddNewUser.png "Необходимая нам операция доваления")
 3. Нажимаем кнопку "Try it out" для использования операции.
-![alt text](screenshots/SwaggerMainPage.png "Try it out")
+![alt text](screenshots/SwaggerAddNewUser1.png "Try it out")
 4. Вставляем нашу информацию, скопипрованную из файла с тестовыми данными и нажимем кнопку "Execute"
-![alt text](screenshots/SwaggerMainPage.png "Execute")
+![alt text](screenshots/SwaggerAddNewUser2.png "Execute")
 5. Проверяем, что наша сервер обработал информацию и добавил нового пользователя.(Должны получить ответ с кодом 200 и информацией об успешном добавлении)
-![alt text](screenshots/SwaggerMainPage.png "Success")
+![alt text](screenshots/SwaggerAddNewUser3.png "Success")
 
 
 
